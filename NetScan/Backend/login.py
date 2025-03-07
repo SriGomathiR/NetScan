@@ -37,6 +37,8 @@ def hash_password(password):
 
 # Route for User Signup
 @app.route("/signup", methods=["POST"])
+# Route for User Signup
+@app.route("/signup", methods=["POST"])
 def signup():
     try:
         data = request.json
@@ -66,11 +68,13 @@ def signup():
         conn.commit()
         conn.close()
 
-        return jsonify({"message": "Signup successful!", "username": username}), 201
+        return jsonify({"message": "Signup successful!", "username": username, "redirect": "Scan.html"}), 201
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+# Route for User Login
 # Route for User Login
 @app.route("/login", methods=["POST"])
 def login():
@@ -92,12 +96,13 @@ def login():
         conn.close()
 
         if user:
-            return jsonify({"message": "Login successful!", "username": user["username"]}), 200
+            return jsonify({"message": "Login successful!", "username": user["username"], "redirect": "Scan.html"}), 200
         else:
             return jsonify({"error": "Invalid email or password!"}), 401
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)
